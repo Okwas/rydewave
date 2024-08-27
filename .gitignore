@@ -4,6 +4,7 @@ dist/
 npm-debug.*
 *.env
 .env
+.env.local
 *.jks
 *.p8
 *.p12
