@@ -84,7 +84,7 @@ const SignIn = () => {
             className="text-lg text-center text-general-200 mt-10"
           >
             Don't have an account?{" "}
-            <Text className="text-primary-500">Sign Up</Text>
+            <Text className="text-primary-500">Sign up</Text>
           </Link>
         </View>
       </View>
