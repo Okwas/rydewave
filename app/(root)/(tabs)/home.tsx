@@ -15,7 +15,15 @@ import { icons } from "@/constants";
 
 import RideCard from "@/components/RideCard";
 import GoogleTextInput from "@/components/GoogleTextInput";
-import { useEffect } from "react";
+
+import { useLocationStore } from "@/store";
+
+import { useAuth } from "@clerk/clerk-expo";
+import * as Location from "expo-location";
+import { router } from "expo-router";
+import { useState, useEffect } from "react";
+
+import Map from "@/components/Map";
 
 const recentRides = [
   {
@@ -128,12 +136,38 @@ const Home = () => {
   const { user } = useUser();
   const loading = false;
 
+  const { setUserLocation, setDestinationLocation } = useLocationStore();
+
+  const [hasPermission, setHasPermission] = useState<boolean>(false);
+
   const handleSignOut = () => {};
 
   const handleDestinationPress = () => {};
 
   useEffect(() => {
-    console.log(recentRides[0]);
+    const requestLocation = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+
+      if (status !== "granted") {
+        setHasPermission(false);
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync();
+
+      const address = await Location.reverseGeocodeAsync({
+        latitude: location.coords?.latitude!,
+        longitude: location.coords?.longitude!,
+      });
+
+      setUserLocation({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        address: `${address[0].name}, ${address[0].region}`,
+      });
+    };
+
+    requestLocation();
   }, []);
 
   return (
@@ -190,7 +224,7 @@ const Home = () => {
                   Your current location
                 </Text>
                 <View className="flex flex-row items-center bg-transparent h-[300px]">
-                  {/*<Map />*/}
+                  <Map />
                 </View>
               </>
 
