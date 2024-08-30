@@ -137,3 +137,9 @@ declare interface DriverCardProps {
   selected: number;
   setSelected: () => void;
 }
+
+declare interface ProfileInfoCardProps {
+  title: string;
+  displayElement: React.ReactNode;
+  className?: string;
+}
