@@ -20,29 +20,48 @@ const Profile = () => {
         contentContainerStyle={{ paddingBottom: 120 }}
       >
         <Text className="text-2xl font-JakartaBold my-5">Your profile</Text>
-        <View className="flex px-5 justify-center items-center ">
+        <View className="flex px-5 justify-center items-center my-5">
           <Image
-            src={user?.imageUrl}
+            src={user?.externalAccounts[0]?.imageUrl ?? user?.imageUrl}
             className="w-24 h-24 rounded-full"
           ></Image>
         </View>
-        <View className="">
-          <InputField
-            label="First name"
-            placeholder={user?.firstName || "not found"}
-            labelStyle={"text-sm"}
-            inputStyle="p-3.5"
-            editable={false}
-            containerStyle="w-full"
-          />
+        <View className="bg-white flex flex-col items-start justify-center rounded-lg shadow-sm px-5 py-3">
+          <View className="flex flex-col items-start justify-start w-full">
+            <InputField
+              label="First name"
+              placeholder={user?.firstName || "Not Found"}
+              containerStyle="w-full"
+              inputStyle="p-3.5"
+              editable={false}
+            />
 
-          <InputField
-            label="Last name"
-            placeholder="Enter name"
-            labelStyle={"text-sm"}
-            inputStyle="p-3.5"
-            editable={false}
-          />
+            <InputField
+              label="Last name"
+              placeholder={user?.lastName || "Not Found"}
+              containerStyle="w-full"
+              inputStyle="p-3.5"
+              editable={false}
+            />
+
+            <InputField
+              label="Email"
+              placeholder={
+                user?.primaryEmailAddress?.emailAddress || "Not Found"
+              }
+              containerStyle="w-full"
+              inputStyle="p-3.5"
+              editable={false}
+            />
+
+            <InputField
+              label="Phone"
+              placeholder={user?.primaryPhoneNumber?.phoneNumber || "Not Found"}
+              containerStyle="w-full"
+              inputStyle="p-3.5"
+              editable={false}
+            />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
